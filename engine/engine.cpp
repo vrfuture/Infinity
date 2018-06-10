@@ -3,28 +3,34 @@
 
 namespace Infinity{
 
-    Engine::Engine() : m_app(nullptr)
+    // engine defination
+    EngineGlobals engine;
+
+    Engine::Engine()
     {
-        m_app = new Framework::App();
+        // create glfw window app
+        engine.app = new Framework::App();
     }
 
     Engine::~Engine()
     {
-
+        delete engine.app;
+        engine.app = nullptr;
     }
 
     void Engine::init()
     {
-        m_app->init();
+        engine.app->init();
     }
 
     void Engine::mainloop()
     {
-        while(!m_app->shouldAppClose())
+        // iterate update render and swap if window is not closed
+        while(!engine.app->shouldAppClose())
         {
-            m_app->update();
-            m_app->render();
-            m_app->swap();
+            engine.app->update();
+            engine.app->render();
+            engine.app->swap();
         }
     }
 
@@ -40,6 +46,25 @@ namespace Infinity{
 
     void Engine::shutdown()
     {
-        m_app->shutdown();
+        engine.app->shutdown();
+    }
+
+    // Engine global struct to collect variables=========================================
+    void initEngine()
+    {
+        // create engine and init
+        engine.engine = new Engine();
+        engine.engine->init();
+    }
+
+    // destory engine and collect resources
+    void shutdownEngine()
+    {
+        // close
+        engine.engine->shutdown();
+
+        // destory the engine
+        delete engine.engine;
+        engine.engine = nullptr;
     }
 }

@@ -1,16 +1,17 @@
 #include "utils/Algorithm.h"
 #include "engine/engine.h"
 
+using Infinity::engine;
+
 int main()
 {
-    // Infinity engine initialization
-    Infinity::Engine engine;
-    engine.init();
+    // engine initialization
+    Infinity::initEngine();
 
-    // main loop
-    engine.mainloop();
+    // infinity main update and rendering loop
+    engine.engine->mainloop();
 
     // close engine and return properly
-    engine.shutdown();
+    Infinity::shutdownEngine();
     return 0;
 }

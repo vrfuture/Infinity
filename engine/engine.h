@@ -13,7 +13,7 @@ namespace Infinity{
         Engine();
         virtual ~Engine();
 
-        void init();
+        static void init();
         // Main loop function
         void mainloop();
 
@@ -22,10 +22,25 @@ namespace Infinity{
         void swap();
 
         void shutdown();
-
-        private:
-        Framework::App *m_app;
     };
+
+    // engine initialization preocess
+    void initEngine();
+
+    // engine destory engine
+    void shutdownEngine();
+
+    struct EngineGlobals {
+        Engine *engine;
+        Framework::App *app;
+
+        EngineGlobals(){
+            engine = nullptr;
+            app = nullptr;
+        }
+    };
+
+    extern EngineGlobals engine;
 }
 
 #endif//_ENGINE_H_

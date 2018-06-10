@@ -18,8 +18,15 @@ namespace Framework{
         void update();
         void render();
         void swap();
-
         void shutdown();
+
+        // get window width and height
+        inline int getWidth()  { return m_width; }
+        inline int getHeight() { return m_height; }
+
+    private:
+        static void resizeEvent(GLFWwindow *window, int width, int height); 
+        static void keyPressedEvent(GLFWwindow *window, int key, int scancode, int action, int mode);
 
     private:
         GLFWwindow *m_window;   // glfw window instance

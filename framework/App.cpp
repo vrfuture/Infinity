@@ -32,7 +32,7 @@ namespace Framework{
             return -1;
         }
         // Create a windowed mode window and its OpenGL context
-        m_window = glfwCreateWindow(m_width, m_height, "Infinity-Engine", NULL, NULL);
+        m_window = glfwCreateWindow(m_width, m_height, "Infinity-engine", NULL, NULL);
         if (!m_window)
         {
             glfwTerminate();
@@ -48,6 +48,11 @@ namespace Framework{
                 return -1;
             }
         #endif
+        
+        // register keyboard event
+        glfwSetKeyCallback(m_window, keyPressedEvent);
+        // register window resize event
+        glfwSetWindowSizeCallback(m_window, resizeEvent);
     }
 
     bool App::shouldAppClose()
@@ -57,7 +62,8 @@ namespace Framework{
 
     void App::update()
     {
-
+        // firstly, poll for and process events
+        glfwPollEvents();
     }
 
     void App::render()
@@ -70,13 +76,23 @@ namespace Framework{
     {
         // Swap front and back buffers
         glfwSwapBuffers(m_window);
-
-        // Poll for and process events
-        glfwPollEvents();
     }
 
     void App::shutdown()
     {
         glfwTerminate();
+    }
+
+    void App::resizeEvent( GLFWwindow *window, int width, int height)
+    {
+        glViewport(0, 0, width, height);
+    }
+
+    void App::keyPressedEvent(GLFWwindow* window, int key, int scancode, int action, int mode)
+    {
+        if(key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
+        {
+            glfwSetWindowShouldClose(window, true);
+        }
     }
 }
