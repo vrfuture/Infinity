@@ -14,6 +14,9 @@ aux_source_directory(. DIR_ROOT_SRCS)
 FILE(GLOB_RECURSE SRC_FILES
     "engine/engine.cpp"
     "framework/App.cpp"
+    "render/Render.cpp"
+    "render/RenderManager.cpp"
+    "render/RenderState.cpp"
     "utils/Algorithm.cpp"
 )
 

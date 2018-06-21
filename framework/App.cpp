@@ -1,4 +1,6 @@
 #include "App.h"
+#include "engine/engine.h"
+
 #ifdef WIN32
     #include <glad/glad.h>
 #endif
@@ -6,7 +8,7 @@
 
 #include <iostream>
 
-namespace Framework{
+namespace Infinity{
 
     App::App() : m_width(960), m_height(600)
     {
@@ -85,7 +87,9 @@ namespace Framework{
 
     void App::resizeEvent( GLFWwindow *window, int width, int height)
     {
-        glViewport(0, 0, width, height);
+        // adjust window size according to resize callback
+        engine.app->setWidth(width);
+        engine.app->setHeight(height);
     }
 
     void App::keyPressedEvent(GLFWwindow* window, int key, int scancode, int action, int mode)

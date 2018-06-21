@@ -3,7 +3,7 @@
 
 struct GLFWwindow;
 
-namespace Framework{
+namespace Infinity{
     class App
     {
     public:
@@ -14,6 +14,8 @@ namespace Framework{
         bool shouldAppClose();
 
         int init();
+        inline void setWidth(int width) { m_width = width; }
+        inline void setHeight(int height) { m_height = height; }
 
         void update();
         void render();
@@ -32,8 +34,8 @@ namespace Framework{
         GLFWwindow *m_window;   // glfw window instance
 
         // window size
-        unsigned m_width;
-        unsigned m_height;
+        int m_width;
+        int m_height;
     };
 }
 

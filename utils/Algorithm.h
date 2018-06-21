@@ -1,7 +1,7 @@
 #ifndef _ALGORITHM_H_
 #define _ALGORITHM_H_
 
-namespace utils{
+namespace Infinity{
     class Algorithm
     {
     public:

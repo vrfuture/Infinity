@@ -2,7 +2,7 @@
 
 #include <iostream>
 
-namespace utils{
+namespace Infinity{
 
     void Algorithm::HelloInfinity()
     {

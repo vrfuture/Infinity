@@ -1,12 +1,13 @@
 #ifndef _ENGINE_H_
 #define _ENGINE_H_
 
-namespace Framework{
-    class App;
-}
-
 namespace Infinity{
-
+    
+    // class forward declaration
+    class App;
+    class Render;
+    class RenderManager;
+    
     class Engine
     {
     public:
@@ -30,13 +31,18 @@ namespace Infinity{
     // engine destory engine
     void shutdownEngine();
 
+    // Global variable definitions here =================================================
     struct EngineGlobals {
         Engine *engine;
-        Framework::App *app;
+        App *app;
+        Render *render;
+        RenderManager *renderManager;
 
         EngineGlobals(){
             engine = nullptr;
-            app = nullptr;
+            app    = nullptr;
+            render = nullptr;
+            renderManager = nullptr;
         }
     };
 

@@ -1,5 +1,8 @@
 #include "engine.h"
 #include "framework/App.h"
+#include "render/RenderManager.h"
+#include "render/RenderState.h"
+#include "render/Render.h"
 
 namespace Infinity{
 
@@ -8,8 +11,8 @@ namespace Infinity{
 
     Engine::Engine()
     {
-        // create glfw window app
-        engine.app = new Framework::App();
+        // create glfw based window app
+        engine.app = new App();
     }
 
     Engine::~Engine()
@@ -29,8 +32,11 @@ namespace Infinity{
         while(!engine.app->shouldAppClose())
         {
             engine.app->update();
+            update();
             engine.app->render();
+            render();
             engine.app->swap();
+            swap();
         }
     }
 
@@ -40,6 +46,16 @@ namespace Infinity{
     }
 
     void Engine::render()
+    {
+        // set render viewport
+        RenderState *state = engine.render->getRenderState();
+        state->setViewport(0, 0, engine.app->getWidth(), engine.app->getHeight());
+
+        // render world
+        engine.render->renderWorld();
+    }
+
+    void Engine::swap()
     {
 
     }
@@ -55,6 +71,13 @@ namespace Infinity{
         // create engine and init
         engine.engine = new Engine();
         engine.engine->init();
+
+        // create render manager instance
+        engine.renderManager = new RenderManager();
+
+        // operators after engine initialzation
+        RenderState *_state = engine.render->getRenderState();
+        _state->setBackgroundColor(1.0f, 0.0f, 0.0f, 1.0f);
     }
 
     // destory engine and collect resources
@@ -66,5 +89,8 @@ namespace Infinity{
         // destory the engine
         delete engine.engine;
         engine.engine = nullptr;
+
+        delete engine.renderManager;
+        engine.renderManager = nullptr;
     }
 }
