@@ -3,6 +3,7 @@
 #include "render/RenderManager.h"
 #include "render/RenderState.h"
 #include "render/Render.h"
+#include "render/Visualizer.h"
 
 namespace Infinity{
 
@@ -53,6 +54,9 @@ namespace Infinity{
 
         // render world
         engine.render->renderWorld();
+
+        // render visualizer
+        engine.visualizer->renderPrimitives();
     }
 
     void Engine::swap()
@@ -75,9 +79,12 @@ namespace Infinity{
         // create render manager instance
         engine.renderManager = new RenderManager();
 
+        // create visualizer
+        engine.visualizer = new Visualizer();
+
         // operators after engine initialzation
         RenderState *_state = engine.render->getRenderState();
-        _state->setBackgroundColor(1.0f, 0.0f, 0.0f, 1.0f);
+        _state->setBackgroundColor(0.0f, 0.0f, 0.0f, 1.0f);
     }
 
     // destory engine and collect resources

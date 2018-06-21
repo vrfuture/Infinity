@@ -7,6 +7,7 @@ namespace Infinity{
     class App;
     class Render;
     class RenderManager;
+    class Visualizer;
     
     class Engine
     {
@@ -37,6 +38,7 @@ namespace Infinity{
         App *app;
         Render *render;
         RenderManager *renderManager;
+        Visualizer *visualizer;
 
         EngineGlobals(){
             engine = nullptr;
