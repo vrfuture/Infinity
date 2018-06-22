@@ -6,6 +6,9 @@
 #endif
 #include <GLFW/glfw3.h>
 
+#define VISUALIZER_NUM_LINES		(1024 * 2)
+#define VISUALIZER_NUM_TRIANGLES	(1024 * 3)
+
 namespace Infinity{
 
     Visualizer::Visualizer()
@@ -54,27 +57,31 @@ namespace Infinity{
 
     void Visualizer::render_triangles()
     {
-        
+        // bind vertex array buffer and update data
+        glBindVertexArray(vertex_vao_id);
+        glBindBuffer(GL_ARRAY_BUFFER, vertex_vbo_id);
+        glBufferData(GL_ARRAY_BUFFER, sizeof(Triangle) * m_triangles.size(), NULL, GL_STREAM_DRAW);
+
+        // write data into cpu
+        glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(Triangle) * m_triangles.size(), &m_triangles[0]);
+
         m_triangles.clear();
     }
 
     void Visualizer::initBaseVAO()
     {
-        glGenVertexArrays(1, &m_vaoBase);
-        unsigned int vbo;
-        glGenBuffers(1, &vbo);
+        // create vao and vbo
+        glGenVertexArrays(1, &vertex_vao_id);
+        glGenBuffers(1, &vertex_vbo_id);
         
-        glBindVertexArray(m_vaoBase);
-        glBindBuffer(GL_ARRAY_BUFFER, vbo);
+        // bind vertex array buffer
+        glBindVertexArray(vertex_vao_id);
+        glBindBuffer(GL_ARRAY_BUFFER, vertex_vbo_id);
 
-        float vertices[] = {
-            -0.5f, -0.5f, 0.0f,
-            0.5f, -0.5f, 0.0f,
-            0.0f, 0.5f, 0.0f
-        };
-
-        glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+        // tell gpu the data type
+        glBufferData(GL_ARRAY_BUFFER, 0, NULL, GL_STREAM_DRAW);
         glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
         glEnableVertexAttribArray(0);
+        glBindVertexArray(0);
     }
 }

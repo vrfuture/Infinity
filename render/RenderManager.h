@@ -10,6 +10,13 @@ namespace Infinity{
         ~RenderManager();
 
         virtual void createRender() const;
+
+        // use and unuse shader
+        static unsigned int getProgramID();
+        static void setProgramID(unsigned int program);
+
+    private:
+        static unsigned int s_program_id;
     };
 
 }

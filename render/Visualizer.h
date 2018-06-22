@@ -24,8 +24,8 @@ namespace Infinity{
 
         struct Triangle {
 			glm::vec3 xyz[3];		        // triangle vertices
+            glm::vec2 texcoord;             // texture coordiante
 			glm::vec4 color;		        // triangle color
-			float distance;		            // distance
 		};
 
     private:
@@ -37,7 +37,10 @@ namespace Infinity{
 
         // base shader
         Shader *m_shaderBase;
-        unsigned int m_vaoBase;
+
+        // variable members
+        unsigned int vertex_vao_id;         // vao
+		unsigned int vertex_vbo_id;         // vbo
 
         std::vector<Triangle> m_triangles;  // 3D triangles
     };

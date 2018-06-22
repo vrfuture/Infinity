@@ -40,6 +40,9 @@ namespace Infinity{
         glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
         glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
 
+        // glfw multiple sample
+        glfwWindowHint(GLFW_SAMPLES, 4);
+
         // Create a windowed mode window and its OpenGL context
         m_window = glfwCreateWindow(m_width, m_height, "Infinity-engine", NULL, NULL);
         if (!m_window)
@@ -104,6 +107,16 @@ namespace Infinity{
         if(key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
         {
             glfwSetWindowShouldClose(window, true);
+        }
+        else if (key == GLFW_KEY_Q && action == GLFW_PRESS)
+        {
+            // enable multisample
+            glEnable(GL_MULTISAMPLE);
+        }
+        else if (key == GLFW_KEY_E && action == GLFW_PRESS)
+        {
+            // disable multisample
+            glDisable(GL_MULTISAMPLE);
         }
     }
 }
