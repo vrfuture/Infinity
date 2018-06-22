@@ -6,6 +6,8 @@
 
 namespace Infinity{
 
+    class Shader;
+
     class Visualizer
     {
     public:
@@ -28,9 +30,14 @@ namespace Infinity{
 
     private:
         void render_triangles();
+        void initBaseVAO();
 
         glm::mat4 m_projection;
         glm::mat4 m_modelView;
+
+        // base shader
+        Shader *m_shaderBase;
+        unsigned int m_vaoBase;
 
         std::vector<Triangle> m_triangles;  // 3D triangles
     };

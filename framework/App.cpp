@@ -33,6 +33,13 @@ namespace Infinity{
         {
             return -1;
         }
+
+        // configure glfw3 based window hint
+        glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+        glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+        glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+        glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
+
         // Create a windowed mode window and its OpenGL context
         m_window = glfwCreateWindow(m_width, m_height, "Infinity-engine", NULL, NULL);
         if (!m_window)
