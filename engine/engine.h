@@ -6,7 +6,6 @@ namespace Infinity{
     // class forward declaration
     class App;
     class Render;
-    class RenderManager;
     class Visualizer;
     
     class Engine
@@ -37,14 +36,12 @@ namespace Infinity{
         Engine *engine;
         App *app;
         Render *render;
-        RenderManager *renderManager;
         Visualizer *visualizer;
 
         EngineGlobals(){
             engine = nullptr;
             app    = nullptr;
             render = nullptr;
-            renderManager = nullptr;
         }
     };
 

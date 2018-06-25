@@ -14,9 +14,9 @@ aux_source_directory(. DIR_ROOT_SRCS)
 FILE(GLOB_RECURSE SRC_FILES
     "engine/engine.cpp"
     "framework/App.cpp"
-    #"framework/Ffp.cpp"
+    "framework/Texture.cpp"
+    "players/Player.cpp"
     "render/Render.cpp"
-    "render/RenderManager.cpp"
     "render/RenderState.cpp"
     "render/Visualizer.cpp"
     "render/framework/Shader.cpp"
@@ -36,8 +36,9 @@ IF (APPLE)
     set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -framework OpenGL -framework Cocoa -framework IOKit -framework CoreVideo")
 ENDIF ()
 
-# 添加链接库  
-target_link_libraries(Infinity glfw3)
+# 添加链接库
+# SOIL and opengl32 have not been tested on mac osx 
+target_link_libraries(Infinity glfw3 SOIL opengl32)
 
 # 下面是第二种方法，需要每个文件夹生成一个库文件，并在最终的生成可执行文件时进行链接
 # 添加 Lib子目录  

@@ -19,8 +19,16 @@ namespace Infinity{
 
         void renderPrimitives();
 
+        struct Vertex
+        {
+            glm::vec3 xyz;      // position
+            glm::vec3 normal;   // normal
+            glm::vec4 texcoord; // texture coordinates or color
+        };
+
         // render 3d triangles
         void renderTriangles3D(const glm::vec3 &v0,const glm::vec3 &v1,const glm::vec3 &v2,const glm::vec4 &color);
+        void renderTriangles3D(const Vertex &p0, const Vertex &p1, const Vertex &p2);
 
         struct Triangle {
 			glm::vec3 xyz[3];		        // triangle vertices
@@ -30,19 +38,19 @@ namespace Infinity{
 
     private:
         void render_triangles();
-        void initBaseVAO();
+        void initDefaultVAO();
 
         glm::mat4 m_projection;
         glm::mat4 m_modelView;
 
         // base shader
-        Shader *m_shaderBase;
+        Shader *m_shaderDefault;
 
         // variable members
         unsigned int vertex_vao_id;         // vao
 		unsigned int vertex_vbo_id;         // vbo
 
-        std::vector<Triangle> m_triangles;  // 3D triangles
+        std::vector<Vertex> m_triangles;    // 3D triangles
     };
 }
 

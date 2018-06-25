@@ -1,6 +1,5 @@
 #include "engine.h"
 #include "framework/App.h"
-#include "render/RenderManager.h"
 #include "render/RenderState.h"
 #include "render/Render.h"
 #include "render/Visualizer.h"
@@ -76,8 +75,8 @@ namespace Infinity{
         engine.engine = new Engine();
         engine.engine->init();
 
-        // create render manager instance
-        engine.renderManager = new RenderManager();
+        // create render
+        engine.render = new Render();
 
         // create visualizer
         engine.visualizer = new Visualizer();
@@ -96,8 +95,5 @@ namespace Infinity{
         // destory the engine
         delete engine.engine;
         engine.engine = nullptr;
-
-        delete engine.renderManager;
-        engine.renderManager = nullptr;
     }
 }
