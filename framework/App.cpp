@@ -60,6 +60,8 @@ namespace Infinity{
                 return -1;
             }
         #endif
+
+        glEnable(GL_DEPTH_TEST);
         
         // register keyboard event
         glfwSetKeyCallback(m_window, keyPressedEvent);
