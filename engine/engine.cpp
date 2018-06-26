@@ -3,6 +3,7 @@
 #include "render/RenderState.h"
 #include "render/Render.h"
 #include "render/Visualizer.h"
+#include "world/World.h"
 
 namespace Infinity{
 
@@ -19,6 +20,15 @@ namespace Infinity{
     {
         delete engine.app;
         engine.app = nullptr;
+
+        delete engine.render;
+        engine.render = nullptr;
+
+        delete engine.visualizer;
+        engine.visualizer = nullptr;
+
+        delete engine.world;
+        engine.world = nullptr;
     }
 
     void Engine::init()
@@ -77,6 +87,9 @@ namespace Infinity{
 
         // create render
         engine.render = new Render();
+
+        // create world
+        engine.world = new World();
 
         // create visualizer
         engine.visualizer = new Visualizer();

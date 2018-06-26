@@ -11,9 +11,10 @@ namespace Infinity{
         Player();
         ~Player();
 
+        const glm::mat4& getModelView();
+
     private:
-        glm::mat4 m_transform;
-        
+        glm::mat4 m_modelView;
     };
 
 }

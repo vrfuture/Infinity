@@ -61,7 +61,7 @@ namespace Infinity{
             }
         #endif
 
-        glEnable(GL_DEPTH_TEST);
+        //glEnable(GL_DEPTH_TEST);
         
         // register keyboard event
         glfwSetKeyCallback(m_window, keyPressedEvent);
@@ -83,7 +83,7 @@ namespace Infinity{
     void App::render()
     {
          // Render here
-        glClear(GL_COLOR_BUFFER_BIT);
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     }
 
     void App::swap()

@@ -23,6 +23,7 @@ FILE(GLOB_RECURSE SRC_FILES
     "render/Visualizer.cpp"
     "render/framework/Shader.cpp"
     "utils/Algorithm.cpp"
+    "world/World.cpp"
 )
 
 # windows 系统的话需要包含glad库从而能够调用opengl函数

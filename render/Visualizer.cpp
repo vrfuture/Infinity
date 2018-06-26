@@ -6,6 +6,7 @@
     #include <glad/glad.h>
 #endif
 #include <GLFW/glfw3.h>
+#include <iostream>
 
 #define VISUALIZER_NUM_LINES		(1024 * 2)
 #define VISUALIZER_NUM_TRIANGLES	(1024 * 3)
