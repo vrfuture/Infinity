@@ -2,6 +2,7 @@
 #include "engine/engine.h"
 #include "framework/Shader.h"
 #include "framework/Texture.h"
+#include "objects/ObjectMesh.h"
 #include "players/Player.h"
 #include "render/RenderState.h"
 #include "render/Render.h"
@@ -18,7 +19,9 @@
 
 namespace Infinity{
 
-    Texture *texture = NULL;
+    Texture *texture = nullptr;
+    ObjectMesh *mesh = nullptr;
+
 
     Visualizer::Visualizer()
     {
@@ -27,6 +30,8 @@ namespace Infinity{
         texture = new Texture();
         texture->load("data/core/textures/img_cheryl.jpg");
         initDefaultVAO();
+
+        mesh = new ObjectMesh("data/core/meshes/nanosuit/nanosuit.obj", false);
     }
 
     Visualizer::~Visualizer()
@@ -47,6 +52,8 @@ namespace Infinity{
     void Visualizer::renderPrimitives()
     {
         if(m_triangles.size() > 0) render_triangles();
+
+        mesh->renderMesh();
     }
 
     void Visualizer::renderTriangles3D(const glm::vec3 &v0,const glm::vec3 &v1,const glm::vec3 &v2,const glm::vec4 &color)

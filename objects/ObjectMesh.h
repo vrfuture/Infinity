@@ -13,6 +13,8 @@ class aiMesh;
 
 namespace Infinity{
 
+    class Shader;
+
     class ObjectMesh
     {
     public:
@@ -27,6 +29,8 @@ namespace Infinity{
         Mesh processMesh(aiMesh *mesh, const aiScene *scene);
         std::vector<Mesh::Texture> loadMaterialTextures(aiMaterial *mat, aiTextureType type, std::string typeName);
         unsigned int TextureFromFile(const char *path, const std::string &directory, bool gamma = false);
+
+        Shader *m_shaderModel;
 
         std::vector<Mesh::Texture> m_textureLoaded;
         std::vector<Mesh> m_meshes;

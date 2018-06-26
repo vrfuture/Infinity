@@ -45,6 +45,7 @@ namespace Infinity{
 
         // base shader
         Shader *m_shaderDefault;
+        Shader *m_shaderModel;
 
         // variable members
         unsigned int vertex_vao_id;         // vao

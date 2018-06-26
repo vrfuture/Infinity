@@ -7,6 +7,7 @@
 
 namespace Infinity
 {
+    class Shader;
     class Mesh
     {
     public:
@@ -28,7 +29,7 @@ namespace Infinity
         Mesh(std::vector<Vertex> vertices, std::vector<unsigned int> indices, std::vector<Texture> textures);
         ~Mesh();
 
-        void renderMesh();
+        void renderMesh(Shader *shader);
 
     private:
         void setupMesh();

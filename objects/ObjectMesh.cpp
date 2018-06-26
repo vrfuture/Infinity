@@ -1,4 +1,5 @@
 #include "ObjectMesh.h"
+#include "render/framework/Shader.h"
 
 #include <assimp/Importer.hpp>
 #include <assimp/postprocess.h>
@@ -15,6 +16,8 @@ namespace Infinity{
     ObjectMesh::ObjectMesh(const char* filename, bool gamma)
     {
         loadMesh(filename);
+
+         m_shaderModel   = new Shader("data/core/shaders/baseModel.vs", "data/core/shaders/baseModel.fs");
     }
 
     ObjectMesh::~ObjectMesh()
@@ -26,7 +29,7 @@ namespace Infinity{
     {
         for(int i=0; i<m_meshes.size(); i++)
         {
-            m_meshes[i].renderMesh();
+            m_meshes[i].renderMesh(m_shaderModel);
         }
     }
 

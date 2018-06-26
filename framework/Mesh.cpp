@@ -1,9 +1,16 @@
 #include "Mesh.h"
+#include "engine/engine.h"
+#include "render/framework/Shader.h"
+#include "players/Player.h"
+#include "render/RenderState.h"
+#include "render/Render.h"
+#include "world/World.h"
 
 #ifdef WIN32
     #include <glad/glad.h>
 #endif
 #include <GLFW/glfw3.h>
+#include <iostream>
 
 namespace Infinity{
 
@@ -27,7 +34,7 @@ namespace Infinity{
 
     }
 
-    void Mesh::renderMesh()
+    void Mesh::renderMesh(Shader *shader)
     {
         // bind appropriate textures
         unsigned int diffuseNr  = 1;
@@ -39,22 +46,39 @@ namespace Infinity{
             glActiveTexture(GL_TEXTURE0 + i);
             std::string number;
             std::string name = textures[i].tex_type;
-            if(name == "texture_diffuse")
+            if(name == "texture_diffuse"){
                 number = std::to_string(diffuseNr++);
-            else if (name == "texture_specular")
+                /*
+            else if (name == "texture_specular"){
                 number = std::to_string(specularNr++);
+                continue;
+            }
             else if(name == "texture_normal")
                 number = std::to_string(normalNr++);
             else if(name == "texture_height")
                 number = std::to_string(heightNr++);
+                */
 
             //glUniform1i(glGetUniformLocation(shader.ID, (name + number).c_str()), i);
+            //shader->setUniformInt((name + number).c_str(), i);
             // and finally bind the texture
             glBindTexture(GL_TEXTURE_2D, textures[i].tex_id);
+            }
         }
         // draw mesh
         glBindVertexArray(m_vao_id);
+
+        shader->bind();
+        RenderState *state = engine.render->getRenderState();
+        glm::mat4 _proj = state->getProjection();
+        glm::mat4 _view = engine.world->getPlayer()->getModelView();
+
+        shader->setUniformMat4("view", _view);
+        shader->setUniformMat4("projection", _proj);
+
         glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, 0);
+        shader->unbind();
+
         glBindVertexArray(0);
 
         // always good practice to set everything back to defaults once configured.
