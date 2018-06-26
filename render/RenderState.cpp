@@ -30,7 +30,8 @@ namespace Infinity{
         glViewport(x, y, width, height);
 
         // recalculate view projection matrix
-        glm::mat4 _projection = glm::perspective(glm::radians(45.0f), float(width) / float(height), 0.01f, 1000.0f);
+        m_projection = glm::perspective(glm::radians(45.0f), float(width) / float(height), 0.01f, 1000.0f);
+        //m_projection = glm::ortho(-1.0f, 1.0f, -1.0f, 1.0f, -1.0f, 1.0f);
 
         // record window size
         m_windowWidth  = width;

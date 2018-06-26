@@ -1,6 +1,11 @@
 #include "Visualizer.h"
+#include "engine/engine.h"
 #include "framework/Shader.h"
 #include "framework/Texture.h"
+#include "players/Player.h"
+#include "render/RenderState.h"
+#include "render/Render.h"
+#include "world/World.h"
 
 #ifdef WIN32
     #include <glad/glad.h>
@@ -83,6 +88,14 @@ namespace Infinity{
 
         // use base shader to draw cartoon triangle
         m_shaderDefault->bind();
+
+        RenderState *state = engine.render->getRenderState();
+        glm::mat4 _proj = state->getProjection();
+        glm::mat4 _view = engine.world->getPlayer()->getModelView();
+
+        m_shaderDefault->setUniformMat4("view", _view);
+        m_shaderDefault->setUniformMat4("projection", _proj);
+
         glDrawArrays(GL_TRIANGLES, 0, m_triangles.size());
         m_shaderDefault->unbind();
 

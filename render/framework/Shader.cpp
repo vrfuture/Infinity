@@ -166,7 +166,13 @@ namespace Infinity{
     {
         if(m_programID)
         {
-            glUniform1i(glGetUniformLocation(m_programID, name), (int)value);
+            int _index = glGetUniformLocation(m_programID, name);
+            if(-1 == _index)
+            {
+                std::cout<< "Shader::setUniformBool " << "cannot find uniform :" <<name << std::endl;
+                return;
+            }
+            glUniform1i(_index, (int)value);
         }
     }
 
@@ -174,7 +180,13 @@ namespace Infinity{
     {
         if(m_programID)
         {
-            glUniform1i(glGetUniformLocation(m_programID, name), value);
+            int _index = glGetUniformLocation(m_programID, name);
+            if(-1 == _index)
+            {
+                std::cout<< "Shader::setUniformFloat " << "cannot find uniform :" <<name << std::endl;
+                return;
+            }
+            glUniform1i(_index, value);
         }
     }
 
@@ -182,7 +194,13 @@ namespace Infinity{
     {
         if(m_programID)
         {
-            glUniform1f(glGetUniformLocation(m_programID, name), value);
+            int _index = glGetUniformLocation(m_programID, name);
+            if(-1 == _index)
+            {
+                std::cout<< "Shader::setUniformFloat " << "cannot find uniform :" <<name << std::endl;
+                return;
+            }
+            glUniform1f(_index, value);
         }
     }
 
@@ -190,7 +208,13 @@ namespace Infinity{
     {
         if(m_programID)
         {
-            glUniform3f(glGetUniformLocation(m_programID, name), x, y, z);
+            int _index = glGetUniformLocation(m_programID, name);
+            if(-1 == _index)
+            {
+                std::cout<< "Shader::setUniformVec3 " << "cannot find uniform :" <<name << std::endl;
+                return;
+            }
+            glUniform3f(_index, x, y, z);
         }
     }
 
@@ -198,7 +222,13 @@ namespace Infinity{
     {
         if(m_programID)
         {
-            glUniformMatrix3fv(glGetUniformLocation(m_programID, name), 1, GL_FALSE, &vec[0]);
+            int _index = glGetUniformLocation(m_programID, name);
+            if(-1 == _index)
+            {
+                std::cout<< "Shader::setUniformVec3 " << "cannot find uniform :" <<name << std::endl;
+                return;
+            }
+            glUniformMatrix3fv(_index, 1, GL_FALSE, &vec[0]);
         }
     }
 
@@ -206,7 +236,14 @@ namespace Infinity{
     {
         if(m_programID)
         {
-            glUniformMatrix4fv(glGetUniformLocation(m_programID, name), 1, GL_FALSE, &mat[0][0]);
+            int _index = glGetUniformLocation(m_programID, name);
+            if(-1 == _index)
+            {
+                std::cout<< "Shader::setUniformMat4 " << "cannot find uniform :" <<name << std::endl;
+                return;
+            }
+            glUniformMatrix4fv(_index, 1, GL_FALSE, &mat[0][0]);
+
         }
     }
 }

@@ -5,7 +5,7 @@ namespace Infinity{
 
     Player::Player()
     {
-        m_modelView = glm::lookAt(glm::vec3(0, 0, 2), glm::vec3(0,0,0), glm::vec3(0, 0, 1));
+        m_modelView = glm::lookAt(glm::vec3(0, 0, 2), glm::vec3(0, 0, 0), glm::vec3(0, 1, 0));
     }
 
     Player::~Player()
