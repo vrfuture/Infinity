@@ -18,6 +18,7 @@ FILE(GLOB_RECURSE SRC_FILES
     "framework/Texture.cpp"
     "objects/ObjectMesh.cpp"
     "players/Player.cpp"
+    "players/PlayerOrbit.cpp"
     "render/Render.cpp"
     "render/RenderState.cpp"
     "render/Visualizer.cpp"
