@@ -11,9 +11,13 @@ namespace Infinity{
         Player();
         ~Player();
 
+        // get model view
         const glm::mat4& getModelView();
 
-    private:
+        // update model view of the player
+        virtual void update();
+
+    protected:
         glm::mat4 m_modelView;
     };
 

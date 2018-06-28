@@ -17,4 +17,9 @@ namespace Infinity{
     {
         return m_modelView;
     }
+
+    void Player::update()
+    {
+        
+    }
 }

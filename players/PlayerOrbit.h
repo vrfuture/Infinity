@@ -10,7 +10,14 @@ namespace Infinity{
     public:
         PlayerOrbit();
         ~PlayerOrbit();
+
+        void update();
+
     private:
+        float m_alpha;      // rotation degree along x axis
+        float m_theta;      // roattion degree along y axis
+
+        float m_radius;     // robit camera radius
 
     };
 
