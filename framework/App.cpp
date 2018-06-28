@@ -72,7 +72,8 @@ namespace Infinity{
             }
         #endif
 
-        //glEnable(GL_DEPTH_TEST);
+        // enable depth test to increase scene reality
+        glEnable(GL_DEPTH_TEST);
         
         // register keyboard event
         glfwSetKeyCallback(m_window, keyPressedEvent);
@@ -173,7 +174,7 @@ namespace Infinity{
     {
         m_cursor_position_x = x;
         m_cursor_position_y = y;
-        //std::cout <<x << ", " <<y<<std::endl;
+        // enable camera rotation if mouse left button pressed
         if(m_mouse_button_state[GLFW_MOUSE_BUTTON_LEFT])
         {
             PlayerOrbit *_player = static_cast<PlayerOrbit*>(engine.world->getPlayer());
@@ -187,6 +188,7 @@ namespace Infinity{
                 _player->setAlpha(_alpha);
                 _player->setTheta(_theta);
 
+                // record mouse position again
                 m_last_cursor_position_x = m_cursor_position_x;
                 m_last_cursor_position_y = m_cursor_position_y;
             }
