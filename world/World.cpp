@@ -1,11 +1,11 @@
 #include "World.h"
-#include "players/Player.h"
+#include "players/PlayerOrbit.h"
 
 namespace Infinity{
 
     World::World()
     {
-        m_player = new Player();
+        m_player = new PlayerOrbit();
     }
 
     World::~World()
@@ -16,5 +16,10 @@ namespace Infinity{
     Player* World::getPlayer()
     {
         return m_player;
+    }
+
+    void World::update()
+    {
+        m_player->update();
     }
 }

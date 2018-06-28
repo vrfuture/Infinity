@@ -29,6 +29,9 @@ namespace Infinity{
     private:
         static void resizeEvent(GLFWwindow *window, int width, int height); 
         static void keyPressedEvent(GLFWwindow *window, int key, int scancode, int action, int mode);
+        static void mousePressEvent(GLFWwindow*, int button, int action, int mods);
+        static void mouseMoveEvent(GLFWwindow* window, double x, double y);
+        static void mouseWhellEvent(GLFWwindow* window, double x, double y);
 
     private:
         GLFWwindow *m_window;   // glfw window instance
@@ -36,6 +39,13 @@ namespace Infinity{
         // window size
         int m_width;
         int m_height;
+
+        // mouse cursor position
+        static int m_last_cursor_position_x, m_cursor_position_x;
+        static int m_last_cursor_position_y, m_cursor_position_y;
+
+        // mouse button state
+        static int m_mouse_button_state[4];
     };
 }
 

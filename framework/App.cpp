@@ -1,5 +1,7 @@
 #include "App.h"
 #include "engine/engine.h"
+#include "world/World.h"
+#include "players/PlayerOrbit.h"
 
 #ifdef WIN32
     #include <glad/glad.h>
@@ -9,6 +11,15 @@
 #include <iostream>
 
 namespace Infinity{
+
+    // mouse cursor position
+    int App::m_last_cursor_position_x = 0, App::m_cursor_position_x = 0;
+    int App::m_last_cursor_position_y = 0, App::m_cursor_position_y = 0;
+
+    // mouse button state
+    int App::m_mouse_button_state[4];
+    // mouse rotation sensetive
+    const float c_mouseSensitive = 0.1f;
 
     App::App() : m_width(960), m_height(600)
     {
@@ -67,6 +78,13 @@ namespace Infinity{
         glfwSetKeyCallback(m_window, keyPressedEvent);
         // register window resize event
         glfwSetWindowSizeCallback(m_window, resizeEvent);
+
+        // set mouse press and move event function callback
+        glfwSetMouseButtonCallback(m_window, mousePressEvent);
+	    glfwSetCursorPosCallback(m_window, mouseMoveEvent);
+
+        // mouse whell event
+        glfwSetScrollCallback(m_window, mouseWhellEvent);
     }
 
     bool App::shouldAppClose()
@@ -119,6 +137,69 @@ namespace Infinity{
         {
             // disable multisample
             glDisable(GL_MULTISAMPLE);
+        }
+    }
+
+    void App::mousePressEvent(GLFWwindow*, int button, int action, int mods)
+    {
+        if(action == GLFW_PRESS)
+        {
+            switch(button)
+            {
+                case GLFW_MOUSE_BUTTON_LEFT:
+                    // record current mouse position
+                    m_last_cursor_position_x = m_cursor_position_x;
+                    m_last_cursor_position_y = m_cursor_position_y;
+                    m_mouse_button_state[GLFW_MOUSE_BUTTON_LEFT] = 1;
+                    break;
+                default:
+                    return;
+            }
+        }
+        else if(action == GLFW_RELEASE)
+        {
+            switch(button)
+            {
+                case GLFW_MOUSE_BUTTON_LEFT:
+                    m_mouse_button_state[GLFW_MOUSE_BUTTON_LEFT] = 0;
+                    break;
+                default:
+                    return;
+            }
+        }
+    }
+
+    void App::mouseMoveEvent(GLFWwindow* window, double x, double y)
+    {
+        m_cursor_position_x = x;
+        m_cursor_position_y = y;
+        //std::cout <<x << ", " <<y<<std::endl;
+        if(m_mouse_button_state[GLFW_MOUSE_BUTTON_LEFT])
+        {
+            PlayerOrbit *_player = static_cast<PlayerOrbit*>(engine.world->getPlayer());
+            if(_player)
+            {
+                double _deltaX = x - m_last_cursor_position_x;
+                double _deltaY = y - m_last_cursor_position_y;
+
+                float _alpha = _player->getAlpha() + (float)_deltaY * c_mouseSensitive;
+                float _theta = _player->getTheta() + (float)_deltaX * c_mouseSensitive;
+                _player->setAlpha(_alpha);
+                _player->setTheta(_theta);
+
+                m_last_cursor_position_x = m_cursor_position_x;
+                m_last_cursor_position_y = m_cursor_position_y;
+            }
+        }
+    }
+
+    void App::mouseWhellEvent(GLFWwindow* window, double x, double y)
+    {
+        PlayerOrbit *_player = static_cast<PlayerOrbit*>(engine.world->getPlayer());
+        if(_player)
+        {
+            float _radius = _player->getRadius() + y * c_mouseSensitive;
+            _player->setRadius(_radius);
         }
     }
 }

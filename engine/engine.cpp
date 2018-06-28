@@ -52,7 +52,7 @@ namespace Infinity{
 
     void Engine::update()
     {
-
+        engine.world->update();
     }
 
     void Engine::render()

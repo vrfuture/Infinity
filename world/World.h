@@ -10,7 +10,10 @@ namespace Infinity{
         World();
         ~World();
 
+        // get player of currrent world
         Player* getPlayer();
+
+        void update();
     
     private:
         Player* m_player;
