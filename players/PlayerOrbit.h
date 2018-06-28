@@ -11,7 +11,7 @@ namespace Infinity{
         PlayerOrbit();
         ~PlayerOrbit();
 
-        void update();
+        virtual void update();
 
     private:
         float m_alpha;      // rotation degree along x axis

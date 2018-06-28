@@ -18,7 +18,7 @@ namespace Infinity{
 
     void PlayerOrbit::update()
     {
-        glm::vec3 position = 
+        glm::vec3 position;
 
 
         m_modelView = glm::lookAt(position, glm::vec3(0, 0, 0), glm::vec3(0, 1, 0));
