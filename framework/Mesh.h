@@ -8,6 +8,7 @@
 namespace Infinity
 {
     class Shader;
+    class Material;
     class Mesh
     {
     public:
@@ -29,13 +30,20 @@ namespace Infinity
         Mesh(std::vector<Vertex> vertices, std::vector<unsigned int> indices, std::vector<Texture> textures);
         ~Mesh();
 
+        // get mesh material
+        Material* getMaterial();
+
+        // render mesh with specific materials
         void renderMesh(Shader *shader);
 
     private:
         void setupMesh();
 
-        std::vector<Vertex> vertices;
-        std::vector<unsigned int> indices;
+        // material used to render the mesh
+        Material *m_material;
+
+        std::vector<Vertex> vertices;       // vertices
+        std::vector<unsigned int> indices;  // indices element
         std::vector<Texture> textures;
 
         unsigned int m_vao_id;

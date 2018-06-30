@@ -7,6 +7,7 @@ namespace Infinity
     {
     public:
         Texture();
+        Texture(const char *filename);
         ~Texture();
 
         // load texture from image file

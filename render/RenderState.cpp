@@ -1,5 +1,9 @@
 #include "RenderState.h"
 
+#include "engine/engine.h"
+#include "world/World.h"
+#include "players/Player.h"
+
 #ifdef WIN32
     #include <glad/glad.h>
 #endif
@@ -52,6 +56,11 @@ namespace Infinity{
     const glm::mat4& RenderState::getProjection()
     {
         return m_projection;
+    }
+
+    const glm::mat4& RenderState::getModelView()
+    {
+        return engine.world->getPlayer()->getModelView();
     }
 
 }

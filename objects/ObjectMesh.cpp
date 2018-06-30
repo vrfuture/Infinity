@@ -162,7 +162,7 @@ namespace Infinity{
                 Mesh::Texture texture;
                 texture.tex_id = TextureFromFile(str.C_Str(), this->m_directory);
                 texture.tex_type = typeName;
-                texture.tex_path = str.C_Str();
+                texture.tex_path = m_directory + '/' +  str.C_Str();
                 textures.push_back(texture);
                 m_textureLoaded.push_back(texture);  // store it as texture loaded for entire model, to ensure we won't unnecesery load duplicate textures.
             }

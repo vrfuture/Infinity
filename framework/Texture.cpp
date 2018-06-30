@@ -14,6 +14,13 @@ namespace Infinity
     {
         m_texture_id = 0;
     }
+
+    Texture::Texture(const char *filename)
+    {
+        m_texture_id = 0;
+        load(filename);
+    }
+
     Texture::~Texture()
     {
 
@@ -21,27 +28,29 @@ namespace Infinity
 
     void Texture::load(const char *filename)
     {
-        // load an image file directly as a new OpenGL texture
-        
-        //m_texture_id = SOIL_load_OGL_texture(filename, SOIL_LOAD_AUTO,  SOIL_CREATE_NEW_ID,
-		 //                                    SOIL_FLAG_INVERT_Y);
-
         glGenTextures(1, &m_texture_id);
-        glBindTexture(GL_TEXTURE_2D, m_texture_id);
-
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-        
 
         int width, height, channels;
         unsigned char *data = SOIL_load_image(filename, &width, &height, &channels, 0);
         if(data)
         {
-            glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
-            //glGenerateMipMap(GL_TEXTURE_2D);
+            glBindTexture(GL_TEXTURE_2D, m_texture_id);
+            GLenum format;
+            if (channels == 1)
+                format = GL_RED;
+            else if (channels == 3)
+                format = GL_RGB;
+            else if (channels == 4)
+                format = GL_RGBA;
+            
+            glTexImage2D(GL_TEXTURE_2D, 0, format, width, height, 0, format, GL_UNSIGNED_BYTE, data);
+            glGenerateMipmap(GL_TEXTURE_2D);
+
+            // configure texture parameters
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
         }
         else
         {

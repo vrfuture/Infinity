@@ -17,9 +17,12 @@ namespace Infinity{
         // set rendering backgound color
         virtual void setBackgroundColor(float r, float g, float b, float a);
 
-        // set projection
+        // set and get projection
         void setProjection(const glm::mat4 &proj);
         const glm::mat4& getProjection();
+
+        // get player model view
+        const glm::mat4& getModelView();
 
     private:
         // window size

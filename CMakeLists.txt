@@ -22,6 +22,7 @@ FILE(GLOB_RECURSE SRC_FILES
     "render/Render.cpp"
     "render/RenderState.cpp"
     "render/Visualizer.cpp"
+    "render/framework/Material.cpp"
     "render/framework/Shader.cpp"
     "utils/Algorithm.cpp"
     "world/World.cpp"

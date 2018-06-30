@@ -17,6 +17,7 @@ namespace Infinity{
         int loadFragMent(const char *fragment);
 
         // compile the shader
+        void load(const char* vertex, const char* fragment);
         int compile();
 
         // use and unuse the shader

@@ -1,9 +1,10 @@
 #include "Mesh.h"
 #include "engine/engine.h"
-#include "render/framework/Shader.h"
 #include "players/Player.h"
 #include "render/RenderState.h"
 #include "render/Render.h"
+#include "render/framework/Shader.h"
+#include "render/framework/Material.h"
 #include "world/World.h"
 
 #ifdef WIN32
@@ -27,6 +28,21 @@ namespace Infinity{
 
         // set vertex buffers and its attribute pointers.
         setupMesh();
+
+        // create new material
+        m_material = new Material();
+        m_material->loadShader("data/core/shaders/baseModel.vs", "data/core/shaders/baseModel.fs");
+        m_material->setName("mesh_base");
+
+        for(int i=0; i<textures.size(); i++)
+        {
+            std::string name = textures[i].tex_type;
+            if(name == "texture_diffuse")
+            {
+                m_material->appendTextureDiffuse(textures[i].tex_path.c_str());
+                break;
+            }
+        }
     }
 
     Mesh::~Mesh()
@@ -34,55 +50,25 @@ namespace Infinity{
 
     }
 
+    Material* Mesh::getMaterial()
+    {
+        return m_material;
+    }
+
     void Mesh::renderMesh(Shader *shader)
     {
-        // bind appropriate textures
-        unsigned int diffuseNr  = 1;
-        unsigned int specularNr = 1;
-        unsigned int normalNr   = 1;
-        unsigned int heightNr   = 1;
-        for(int i=0; i<textures.size(); i++)
-        {
-            glActiveTexture(GL_TEXTURE0 + i);
-            std::string number;
-            std::string name = textures[i].tex_type;
-            if(name == "texture_diffuse"){
-                number = std::to_string(diffuseNr++);
-                /*
-            else if (name == "texture_specular"){
-                number = std::to_string(specularNr++);
-                continue;
-            }
-            else if(name == "texture_normal")
-                number = std::to_string(normalNr++);
-            else if(name == "texture_height")
-                number = std::to_string(heightNr++);
-                */
-
-            //glUniform1i(glGetUniformLocation(shader.ID, (name + number).c_str()), i);
-            //shader->setUniformInt((name + number).c_str(), i);
-            // and finally bind the texture
-            glBindTexture(GL_TEXTURE_2D, textures[i].tex_id);
-            }
-        }
-        // draw mesh
+        // bind vertex array buffer
         glBindVertexArray(m_vao_id);
 
-        shader->bind();
-        RenderState *state = engine.render->getRenderState();
-        glm::mat4 _proj = state->getProjection();
-        glm::mat4 _view = engine.world->getPlayer()->getModelView();
+        // bind and update shader before rendering
+        m_material->bindShader();
+        m_material->update();
 
-        shader->setUniformMat4("view", _view);
-        shader->setUniformMat4("projection", _proj);
-
+        // draw objects with element indices
         glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, 0);
-        shader->unbind();
+        m_material->unbindShader();
 
         glBindVertexArray(0);
-
-        // always good practice to set everything back to defaults once configured.
-        glActiveTexture(GL_TEXTURE0);
     }
 
     void Mesh::setupMesh()

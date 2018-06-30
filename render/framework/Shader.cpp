@@ -22,10 +22,7 @@ namespace Infinity{
     {
         m_programID = 0;
 
-        if(vertex) loadVertex(vertex);
-        if(fragment) loadFragMent(fragment);
-
-        compile();
+        load(vertex, fragment);
     }
 
     Shader::~Shader()
@@ -112,6 +109,15 @@ namespace Infinity{
         glAttachShader(m_programID, _fragmentShader);
         glDeleteShader(_fragmentShader);
         return 1;
+    }
+
+    void Shader::load(const char* vertex, const char* fragment)
+    {
+        if(vertex) loadVertex(vertex);
+        if(fragment) loadFragMent(fragment);
+
+        // compile the shader
+        compile();;
     }
 
     int Shader::compile()
