@@ -16,6 +16,7 @@ FILE(GLOB_RECURSE SRC_FILES
     "framework/App.cpp"
     "framework/Mesh.cpp"
     "framework/Texture.cpp"
+    "importer/ReaderMgr.cpp"
     "objects/ObjectMesh.cpp"
     "players/Player.cpp"
     "players/PlayerOrbit.cpp"
@@ -25,6 +26,8 @@ FILE(GLOB_RECURSE SRC_FILES
     "render/framework/Material.cpp"
     "render/framework/Shader.cpp"
     "utils/Algorithm.cpp"
+    "utils/TinyXml2.cpp"
+    "world/Node.cpp"
     "world/World.cpp"
 )
 

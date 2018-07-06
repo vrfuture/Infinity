@@ -30,21 +30,30 @@ namespace Infinity
         Mesh(std::vector<Vertex> vertices, std::vector<unsigned int> indices, std::vector<Texture> textures);
         ~Mesh();
 
+        // append mesh vertices
+        void addVertices(const Vertex &vertex);
+        void addIndices(unsigned int index);
+
         // get mesh material
         Material* getMaterial();
 
         // render mesh with specific materials
-        void renderMesh(Shader *shader);
-
-    private:
+        void renderMesh();
+        
+        // setup mesh vao and vbo
         void setupMesh();
 
+        // read and save mesh file
+        void load(const char* filename);
+        void save(const char* filename);
+
+    private:
         // material used to render the mesh
         Material *m_material;
 
         std::vector<Vertex> vertices;       // vertices
         std::vector<unsigned int> indices;  // indices element
-        std::vector<Texture> textures;
+        //std::vector<Texture> textures;
 
         unsigned int m_vao_id;
         unsigned int m_vbo_id, m_ebo_id;

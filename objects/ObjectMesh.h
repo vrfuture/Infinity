@@ -1,7 +1,7 @@
 #ifndef _OBJECTMESH_H_
 #define _OBJECTMESH_H_
 
-#include "framework/Mesh.h"
+#include "world/Node.h"
 
 #include <vector>
 #include <string>
@@ -14,27 +14,22 @@ class aiMesh;
 namespace Infinity{
 
     class Shader;
+    class Mesh;
 
-    class ObjectMesh
+    class ObjectMesh : public Node
     {
     public:
+        ObjectMesh();
         ObjectMesh(const char* filename, bool gamma = false);
-        ~ObjectMesh();
+        virtual ~ObjectMesh();
 
-        void renderMesh();
+        // add mesh into the vector
+        void addMesh(Mesh* mesh);
+
+        void render();
 
     private:
-        void loadMesh(const char *filename);
-        void processNode(aiNode *node, const aiScene *scene);
-        Mesh processMesh(aiMesh *mesh, const aiScene *scene);
-        std::vector<Mesh::Texture> loadMaterialTextures(aiMaterial *mat, aiTextureType type, std::string typeName);
-        unsigned int TextureFromFile(const char *path, const std::string &directory, bool gamma = false);
-
-        Shader *m_shaderModel;
-
-        std::vector<Mesh::Texture> m_textureLoaded;
-        std::vector<Mesh> m_meshes;
-        std::string m_directory;
+        std::vector<Mesh*> m_meshes;
     };
 }
 

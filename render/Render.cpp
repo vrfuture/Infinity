@@ -3,6 +3,7 @@
 #include "Visualizer.h"
 
 #include "engine/engine.h"
+#include "world/World.h"
 
 namespace Infinity{
 
@@ -18,6 +19,9 @@ namespace Infinity{
 
     void Render::renderWorld()
     {
+        // render node entities
+        engine.world->render();
+
         glm::vec3 p0(-0.5f, -0.5f, 0.0f);
         glm::vec3 p1(0.5f, -0.5f, 0.0f);
         glm::vec3 p2(0.0f, 0.5f, 0.0f);

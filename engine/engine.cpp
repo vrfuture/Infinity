@@ -108,5 +108,8 @@ namespace Infinity{
         // destory the engine
         delete engine.engine;
         engine.engine = nullptr;
+
+        delete engine.world;
+        engine.world = nullptr;
     }
 }

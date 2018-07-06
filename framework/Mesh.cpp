@@ -1,4 +1,5 @@
 #include "Mesh.h"
+#include "engine/Infinity.h"
 #include "engine/engine.h"
 #include "players/Player.h"
 #include "render/RenderState.h"
@@ -7,24 +8,25 @@
 #include "render/framework/Material.h"
 #include "world/World.h"
 
-#ifdef WIN32
-    #include <glad/glad.h>
-#endif
-#include <GLFW/glfw3.h>
+#include <fstream>
 #include <iostream>
 
 namespace Infinity{
 
     Mesh::Mesh()
     {
-
+        // create new material
+        m_material = new Material();
+        m_material->loadShader("data/core/shaders/baseModel.vs", "data/core/shaders/baseModel.fs");
+        m_material->setName("mesh_base");
     }
 
     Mesh::Mesh(std::vector<Vertex> vertices, std::vector<unsigned int> indices, std::vector<Texture> textures)
     {
+        return;
         this->vertices = vertices;
         this->indices  = indices;
-        this->textures = textures;
+        //this->textures = textures;
 
         // set vertex buffers and its attribute pointers.
         setupMesh();
@@ -47,7 +49,65 @@ namespace Infinity{
 
     Mesh::~Mesh()
     {
+        save("test.mesh");
+    }
 
+    void Mesh::load(const char *name)
+    {
+
+    }
+
+    void Mesh::save(const char* name)
+    {
+        // source buffer
+        std::ofstream _fileMesh;
+        _fileMesh.exceptions(std::ofstream::failbit | std::ofstream::badbit);
+        try
+        {
+            // open file
+            _fileMesh.open(name, std::ios::binary | std::ios::out);
+
+            // write vertices size
+            _fileMesh << vertices.size();
+
+            // write all vertices into the mesh file
+            std::vector<Vertex>::const_iterator it = vertices.begin();
+            while(it != vertices.end())
+            {
+                const Vertex &vertex = (*it);
+                _fileMesh << vertex.xyz.x << vertex.xyz.y << vertex.xyz.z;
+                _fileMesh << vertex.normal.x << vertex.normal.y << vertex.normal.z;
+                _fileMesh << vertex.texcoord.x << vertex.texcoord.y << vertex.texcoord.z << vertex.texcoord.w;
+                it++;
+            }
+
+            // write indices size
+            _fileMesh << indices.size();
+            // write all vertices into the mesh file
+            std::vector<unsigned int>::const_iterator it2 = indices.begin();
+            while(it2 != indices.end())
+            {
+                _fileMesh << (*it2);
+                it2++;
+            }
+
+            // close file
+            _fileMesh.close();
+        }
+        catch(std::ofstream::failure e)
+        {
+            std::cout << "MESH::SAVE::FILE_NOT_SUCCESFULLY_READ" << std::endl;
+        }
+    }
+
+    void Mesh::addVertices(const Vertex &vertex)
+    {
+        vertices.push_back(vertex);
+    }
+
+    void Mesh::addIndices(unsigned int index)
+    {
+        indices.push_back(index);
     }
 
     Material* Mesh::getMaterial()
@@ -55,7 +115,7 @@ namespace Infinity{
         return m_material;
     }
 
-    void Mesh::renderMesh(Shader *shader)
+    void Mesh::renderMesh()
     {
         // bind vertex array buffer
         glBindVertexArray(m_vao_id);
