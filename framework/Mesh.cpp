@@ -1,6 +1,7 @@
 #include "Mesh.h"
 #include "engine/Infinity.h"
 #include "engine/engine.h"
+#include "framework/Surface.h"
 #include "players/Player.h"
 #include "render/RenderState.h"
 #include "render/Render.h"
@@ -10,6 +11,7 @@
 
 #include <fstream>
 #include <iostream>
+#include <iterator>
 
 namespace Infinity{
 
@@ -49,7 +51,7 @@ namespace Infinity{
 
     Mesh::~Mesh()
     {
-        save("test.mesh");
+        save((m_name + ".mesh").c_str());
     }
 
     void Mesh::load(const char *name)
@@ -67,29 +69,13 @@ namespace Infinity{
             // open file
             _fileMesh.open(name, std::ios::binary | std::ios::out);
 
-            // write vertices size
+            // write vertices size and all vertices into the file
             _fileMesh << vertices.size();
+            std::copy( vertices.begin(),  vertices.end(), std::ostream_iterator<Vertex>(_fileMesh));
 
-            // write all vertices into the mesh file
-            std::vector<Vertex>::const_iterator it = vertices.begin();
-            while(it != vertices.end())
-            {
-                const Vertex &vertex = (*it);
-                _fileMesh << vertex.xyz.x << vertex.xyz.y << vertex.xyz.z;
-                _fileMesh << vertex.normal.x << vertex.normal.y << vertex.normal.z;
-                _fileMesh << vertex.texcoord.x << vertex.texcoord.y << vertex.texcoord.z << vertex.texcoord.w;
-                it++;
-            }
-
-            // write indices size
+            // write indices size and all element indices into the mesh file
             _fileMesh << indices.size();
-            // write all vertices into the mesh file
-            std::vector<unsigned int>::const_iterator it2 = indices.begin();
-            while(it2 != indices.end())
-            {
-                _fileMesh << (*it2);
-                it2++;
-            }
+            std::copy( indices.begin(),  indices.end(), std::ostream_iterator<unsigned int>(_fileMesh));
 
             // close file
             _fileMesh.close();
@@ -117,6 +103,13 @@ namespace Infinity{
 
     void Mesh::renderMesh()
     {
+        std::vector<Surface*>::iterator it = m_surfaces.begin();
+        while(it != m_surfaces.end())
+        {
+            (*it)->renderSurface();
+            it++;
+        }
+        return;
         // bind vertex array buffer
         glBindVertexArray(m_vao_id);
 
@@ -157,6 +150,11 @@ namespace Infinity{
         glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, texcoord));
 
         glBindVertexArray(0);
+    }
+
+    void Mesh::setName(const char *name)
+    {
+        m_name = name;
     }
 
 }

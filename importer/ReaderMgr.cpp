@@ -81,6 +81,7 @@ namespace Infinity{
     {
         // create mesh
         Mesh *_mesh = new Mesh();
+        _mesh->setName(ai_mesh->mName.C_Str());
 
         // read mesh vertices, normals and texture coordinates
         readPolygons(_mesh, ai_mesh);

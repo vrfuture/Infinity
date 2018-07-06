@@ -60,6 +60,11 @@ namespace Infinity
         m_name = name;
     }
 
+    std::string Material::getName()
+    {
+        return m_name;
+    }
+
     void Material::loadShader(const char* vertex, const char* fragment)
     {
         m_shader->load(vertex, fragment);

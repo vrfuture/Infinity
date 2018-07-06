@@ -20,6 +20,7 @@ namespace Infinity{
 
         // set material name
         void setName(const char* name);
+        std::string getName();
 
         // get current shader
         Shader* getShader();
